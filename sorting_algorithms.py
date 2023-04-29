@@ -1,4 +1,44 @@
 # Si lees esto, 20 años de vida son añadidos a Ricky god :)
+# Merge sort
+def mergeSort(array):
+  if len(array) > 1:
+
+    # r is the point or middle from
+    #  where the array is divided into two subarrays
+    r = len(array)//2
+
+    L = array[:r] # until middle
+    M = array[r:] # from middle
+
+    # Sort the two halves
+    mergeSort(L)
+    mergeSort(M)
+
+    i = j = k = 0
+
+    # Until we reach either end of either L or M, pick larger among
+    # elements L and M and place them in the correct position at the array
+    while i < len(L) and j < len(M):
+      if L[i] < M[j]:
+        array[k] = L[i]
+        i += 1
+      else:
+        array[k] = M[j]
+        j += 1
+      k += 1
+
+    # When we run out of elements in either L or M,
+    # pick up the remaining elements and put in A[p..r]
+    while i < len(L):
+      array[k] = L[i]
+      i += 1
+      k += 1
+
+    while j < len(M):
+      array[k] = M[j]
+      j += 1
+      k += 1
+
 
 class OrderVec:
     def __init__(self, values: list[int]=None) -> None:
@@ -12,6 +52,7 @@ class OrderVec:
 
         '''
         self.values = values if values is not None else []
+        self.heap_sort()
 
     def heapify(self, array: list(), n: int, k: int) -> None:
         '''
@@ -71,9 +112,7 @@ class OrderVec:
 
 # Prueba del algoritmo anterior
 a = [5, 7, 8, 3, 1, 10, 14, 2, 5]
+print(a)
 solution = OrderVec(a)
 
-print(f'[+] Before:  {solution.values}')
-solution.heap_sort()
-
-print(f'\n[+] After: {solution.values}')
+print(a)
