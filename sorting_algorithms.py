@@ -39,6 +39,9 @@ def mergeSort(array):
       j += 1
       k += 1
 
+def quicksort(array):
+    ...
+
 
 class OrderVec:
     def __init__(self, values: list[int]=None) -> None:
@@ -116,3 +119,4 @@ print(a)
 solution = OrderVec(a)
 
 print(a)
+
