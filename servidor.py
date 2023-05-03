@@ -2,10 +2,10 @@ import socket, threading
 from random import randint
 
 """
-mergeA -1
-heapA -2
-quickL -3
-quickR -4
+mergeA 1
+heapA 2
+quickL 3
+quickR 4
 
 unsorted 0
 sorted 1
@@ -39,7 +39,7 @@ print("Waiting for client request..")
 active = 0
 conexiones = []
 
-op = 2
+op = 1
 time_limit = 2
 # metodo y limite de tiempo
 

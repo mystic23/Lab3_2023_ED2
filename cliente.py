@@ -1,5 +1,6 @@
 import socket, threading
-from time import sleep
+from sorting_algorithms import mergeSort,OrderVec
+
 def bubbleSort(array, stop_event):
     n = len(array)
 
@@ -16,10 +17,22 @@ def bubbleSort(array, stop_event):
                 return
     return 1
 
-def my_function(stop_event):
+def my_function(stop_event,op):
     # Your function code goes here
     # Call the bubble sort algorithm
-    bubbleSort(array, stop_event)
+    if op==0:
+        print("bubble")
+        bubbleSort(array, stop_event)
+    elif op==1:
+        print("merge")
+        mergeSort(array,stop_event)
+    elif op==2:
+        print("heap")
+        sol = OrderVec(array,stop_event)
+    elif op == 3:
+        print("quickL")
+    elif op == 4:
+        print("quickR")
     # Print the sorted array
 
 def timeout_handler():
@@ -57,32 +70,26 @@ while True:
 
     in_data =  client.recv(40960000) # receive 
     array= to_array(in_data.decode()) # into arrayz
-    if op ==1:
-        reverse(array)
-    else:
-        #bubbleSort(array)
-        # Set a timeout of Z seconds
-        # Z = 1
-        # Create a stop event
-        stop_event = threading.Event()
+    
+    stop_event = threading.Event()
 
-        # Create a thread and start it
-        t = threading.Thread(target=my_function, args=(stop_event,))
-        t.start()
+    # Create a thread and start it
+    t = threading.Thread(target=my_function, args=(stop_event,op))
+    t.start()
 
-        # Wait for the thread to complete or timeout
-        t.join(Z)
+    # Wait for the thread to complete or timeout
+    t.join(Z)
 
-        if t.is_alive():
-            finished = 0
-            # Set the stop event to signal the thread to stop
-            stop_event.set()
+    if t.is_alive():
+        finished = 0
+        # Set the stop event to signal the thread to stop
+        stop_event.set()
 
-            # Wait for the thread to stop
-            t.join()
+        # Wait for the thread to stop
+        t.join()
 
-            # Call the timeout handler
-            timeout_handler()
+        # Call the timeout handler
+        timeout_handler()
             
                 
     if finished == 0:

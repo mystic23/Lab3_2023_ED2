@@ -1,4 +1,6 @@
 import random
+import sys
+#print(sys.getrecursionlimit())
 
 def partition(arr, low, high, pivot):
     """
@@ -51,13 +53,16 @@ def quickSort(arr, low, high, pivot_choice):
         quickSort(arr, low, pi - 1, pivot_choice)
         quickSort(arr, pi + 1, high, pivot_choice)
 
-list = [random.randint(0, 10) for i in range(10)]
+list = [random.randint(0, 100) for i in range(1000000)]
+""" 
 print("Unsorted array:")
-print(list)
+#print(list)
 
 pivot_choice = input("Choose pivot (left or right): ")
 n = len(list)
 quickSort(list, 0, n - 1, pivot_choice)
 
 print("Sorted array:")
-print(list)
+#print(list)
+ """
+list.sort()

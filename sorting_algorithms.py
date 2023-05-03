@@ -1,6 +1,6 @@
 # Si lees esto, 20 años de vida son añadidos a Ricky god :)
 # Merge sort
-def mergeSort(array):
+def mergeSort(array,stop_event):
   if len(array) > 1:
 
     # r is the point or middle from
@@ -11,8 +11,8 @@ def mergeSort(array):
     M = array[r:] # from middle
 
     # Sort the two halves
-    mergeSort(L)
-    mergeSort(M)
+    mergeSort(L,stop_event)
+    mergeSort(M,stop_event)
 
     i = j = k = 0
 
@@ -26,19 +26,24 @@ def mergeSort(array):
         array[k] = M[j]
         j += 1
       k += 1
-
+      if stop_event.is_set():
+         return
+      
     # When we run out of elements in either L or M,
     # pick up the remaining elements and put in A[p..r]
     while i < len(L):
       array[k] = L[i]
       i += 1
       k += 1
-
+      if stop_event.is_set():
+         return
     while j < len(M):
       array[k] = M[j]
       j += 1
       k += 1
-
+      if stop_event.is_set():
+         return
+      
 def quicksort(array):
     ...
 
