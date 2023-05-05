@@ -118,10 +118,10 @@ class OrderVec:
             self.heapify(self.values, k, 0)
         
 
-# Prueba del algoritmo anterior
+""" # Prueba del algoritmo anterior
 a = [5, 7, 8, 3, 1, 10, 14, 2, 5]
 print(a)
 solution = OrderVec(a)
 
 print(a)
-
+ """

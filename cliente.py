@@ -42,7 +42,12 @@ def to_string(arr):
     return ",".join(str(i) for i in arr)
 
 def to_array(string):
-    return [int(x) for x in string.split(",")]
+    res = []
+    for x in string.split(","):
+        if len(x)>0:
+            res.append(int(x))
+    return res 
+    #return [int(x) for x in string.split(",")]
 
 # Python program for implementation of Bubble Sort
 
@@ -63,14 +68,16 @@ client.connect((SERVER, PORT))
 while True:
     print(times)
     conditions = client.recv(1096).decode() # get what method to use
+    print("conditions es ",conditions)
     op = int(conditions.split(",")[0])
     Z = float(conditions.split(",")[1])
-    print(conditions)
 
 
-    in_data =  client.recv(40960000) # receive 
-    array= to_array(in_data.decode()) # into arrayz
-    
+    in_data =  client.recv(4096000000) # receive 
+    check = in_data.decode() 
+    print(check)
+    array= to_array(check) # into arrayz
+    print("lEN ",len(array))
     stop_event = threading.Event()
 
     # Create a thread and start it
@@ -96,16 +103,12 @@ while True:
         print("did not finish")
     else:
         print("FINISHED",finished)
-        print(array)
     client.sendall(bytes(str(finished),"UTF-8"))
-
+    print("SENT IF FINISHED")
 
     out_data = to_string(array)
 
-        #print("From Server :" ,in_data.decode())
-        #out_data = input()
     client.sendall(bytes(out_data,'UTF-8'))
-        #if out_data=='bye':
-        #    break
+    print("SENT ARRAY")
     times +=1
 client.close()
