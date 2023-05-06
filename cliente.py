@@ -49,12 +49,6 @@ def to_array(string):
     return res 
     #return [int(x) for x in string.split(",")]
 
-# Python program for implementation of Bubble Sort
-
-def reverse(array:list):
-    array.sort(reverse=True)
-
-
 finished = 1 # assume it successfully sorted
 
 SERVER = "127.0.0.1" #local
@@ -66,7 +60,7 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect((SERVER, PORT))
 
 while True:
-    print(times)
+    print("TIME # ",times)
     conditions = client.recv(1096).decode() # get what method to use
     print("conditions es ",conditions)
     op = int(conditions.split(",")[0])
@@ -75,7 +69,7 @@ while True:
 
     in_data =  client.recv(4096000000) # receive 
     check = in_data.decode() 
-    print(check)
+    #print(check)
     array= to_array(check) # into arrayz
     print("lEN ",len(array))
     stop_event = threading.Event()
@@ -103,12 +97,12 @@ while True:
         print("did not finish")
     else:
         print("FINISHED",finished)
-    client.sendall(bytes(str(finished),"UTF-8"))
-    print("SENT IF FINISHED")
+    v0 = client.send(bytes(str(finished),"UTF-8"))
+    print("SENT IF FINISHED ",v0)
 
     out_data = to_string(array)
 
-    client.sendall(bytes(out_data,'UTF-8'))
-    print("SENT ARRAY")
+    v = client.send(bytes(out_data,'UTF-8'))
+    print("SENT ARRAY ",v)
     times +=1
 client.close()

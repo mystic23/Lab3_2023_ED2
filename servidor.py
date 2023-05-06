@@ -67,12 +67,14 @@ for _ in range(10):
     conn = conexiones[i][0] # connection
     address = conexiones[i][1]
     print("Address ",address)
-    print("Op es ",op)
+    
+
     conditions = f"{str(op)},{str(time_limit)}"
-    conn.sendall(bytes(str(conditions),"UTF-8")) # send conditions
-    print("SENT CONDITIONS")
-    conn.sendall(bytes(msg,'UTF-8')) # send array
-    print("SENT ARRAY")
+    print("conditions: ",conditions)
+    v1 = conn.send(bytes(str(conditions),"UTF-8")) # send conditions
+    print("SENT CONDITIONS ",v1)
+    v2 =conn.send(bytes(msg,'UTF-8')) # send array
+    print("SENT ARRAY ",v2)
     ready = conn.recv(1096).decode() # get if array was sorted
     
     data = conn.recv(4096000000) # receive array from client
