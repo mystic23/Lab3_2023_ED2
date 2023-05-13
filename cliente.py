@@ -30,9 +30,7 @@ def my_function(stop_event,op):
         print("heap")
         sol = OrderVec(array,stop_event)
     elif op == 3:
-        print("quickL")
-    elif op == 4:
-        print("quickR")
+        print("quickM")
     # Print the sorted array
 
 def timeout_handler():
@@ -61,17 +59,18 @@ client.connect((SERVER, PORT))
 
 while True:
     print("TIME # ",times)
-    conditions = client.recv(1096).decode() # get what method to use
-    print("conditions es ",conditions)
-    op = int(conditions.split(",")[0])
-    Z = float(conditions.split(",")[1])
+    if times == 0:
+        conditions = client.recv(1096).decode() # get what method to use (first time)
+        op = int(conditions.split(",")[0])
+        Z = float(conditions.split(",")[1])
 
+    print("conditions es ",conditions)
 
     in_data =  client.recv(4096000000) # receive 
     check = in_data.decode() 
     #print(check)
     array= to_array(check) # into arrayz
-    print("lEN ",len(array))
+    print("LEN ",len(array))
     stop_event = threading.Event()
 
     # Create a thread and start it
@@ -98,11 +97,11 @@ while True:
     else:
         print("FINISHED",finished)
     v0 = client.send(bytes(str(finished),"UTF-8"))
-    print("SENT IF FINISHED ",v0)
+    print("SENT IF FINISHED. Size: ",v0)
 
     out_data = to_string(array)
 
     v = client.send(bytes(out_data,'UTF-8'))
-    print("SENT ARRAY ",v)
+    print("SENT ARRAY. Size: ",v)
     times +=1
 client.close()

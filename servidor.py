@@ -1,11 +1,11 @@
 import socket, threading
 from random import randint
 
+
 """
 mergeA 1
 heapA 2
-quickL 3
-quickR 4
+quickM
 
 unsorted 0
 sorted 1
@@ -62,26 +62,29 @@ array = [randint(0,10) for x in range(1000000)]  # create array
 msg = to_string(array)
 sorted = False
 i = 0
-for _ in range(10):
-
+x = 0
+while not sorted:
+    
     conn = conexiones[i][0] # connection
     address = conexiones[i][1]
     print("Address ",address)
     
+    if x ==0 or x==1:  # on first time to each client
+        conditions = f"{str(op)},{str(time_limit)}"
+        print("conditions: ",conditions)
+        v1 = conn.send(bytes(str(conditions),"UTF-8")) # send conditions
+        print("SENT CONDITIONS. Size:",v1)
 
-    conditions = f"{str(op)},{str(time_limit)}"
-    print("conditions: ",conditions)
-    v1 = conn.send(bytes(str(conditions),"UTF-8")) # send conditions
-    print("SENT CONDITIONS ",v1)
     v2 =conn.send(bytes(msg,'UTF-8')) # send array
-    print("SENT ARRAY ",v2)
-    ready = conn.recv(1096).decode() # get if array was sorted
-    
+    print("SENT ARRAY. Size:",v2)
+    ready = conn.recv(1).decode() # get if array was sorted
+    print("READY IS ",ready, "size ",len(ready))
     data = conn.recv(4096000000) # receive array from client
     array = data.decode()
-    print("READY IS ",ready)
+    
     array = to_array(array)
     print("LEN ",len(array))
+
     if int(ready) == 1:
         sorted = True
         print("it was sorted")
@@ -89,7 +92,7 @@ for _ in range(10):
         break
     else:
         print("not sorted")
-    
+    x +=1 
     i +=1
     if i==2:
         i = 0
