@@ -44,9 +44,6 @@ def mergeSort(array,stop_event):
       if stop_event.is_set():
          return
       
-def quicksort(array):
-    ...
-
 
 class OrderVec:
     def __init__(self, values: list[int]=None) -> None:

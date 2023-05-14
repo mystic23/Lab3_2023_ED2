@@ -1,5 +1,16 @@
 import random
 def qsort(a, lo, hi):
+    """
+    Sorts the given list in ascending order using QuickSort algorithm.
+
+    Parameters:
+    a (list): List of elements to be sorted.
+    lo (int): The lower index of the sub-list to be sorted.
+    hi (int): The higher index of the sub-list to be sorted.
+
+    Returns:
+    None: The original list is sorted in place.
+    """
     if(lo >= hi):
         return
     p = a[(lo + hi) // 2]       # pivot, any a[] except a[hi]
