@@ -8,8 +8,6 @@ def qsort(a, lo, hi):
     lo (int): The lower index of the sub-list to be sorted.
     hi (int): The higher index of the sub-list to be sorted.
 
-    Returns:
-    None: The original list is sorted in place.
     """
     if(lo >= hi):
         return
