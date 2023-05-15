@@ -1,7 +1,5 @@
-import socket, threading
+import socket,time
 from random import randint
-
-
 """
 mergeA 1
 heapA 2
@@ -19,17 +17,10 @@ def to_array(string):
         if len(x)>0:
             res.append(int(x))
     return res 
-# 1,2,3,
-class ClientThread(threading.Thread):
-    def __init__(self,clientAddress,clientsocket,op,time=None):
-        threading.Thread.__init__(self)
-        self.csocket = clientsocket
-        self.op = op
-        if time:
-            self.time = time
-        print ("New connection added: ", clientAddress)
-    
-    
+
+def is_sorted(arr):
+    return all(arr[i] <= arr[i+1] for i in range(len(arr)-1))
+
 LOCALHOST = "127.0.0.1"
 PORT = 8080
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -42,12 +33,19 @@ print("Waiting for client request..")
 
 active = 0
 conexiones = []
+"""
+print("Elija un metodo: (1) Mergesort (2) Heapsort (3) Quicksort")
+op = int(input())
+print("Elija numero mas grande")
+upper = int(input())
+print("Elija tiempo limite")
+time_limit = float(input())
+"""
 
-#print("Elija un metodo: (1) Mergesort (2) Heapsort (3) Quicksort")
-# op = input()
-op = 1
-
-time_limit = 0.5
+op = 2
+upper = 1000
+time_limit = 1
+L = 100000
 # metodo y limite de tiempo
 
 while active!=2: # wait until 2 conections
@@ -58,13 +56,17 @@ while active!=2: # wait until 2 conections
     active +=1
     print("Active connections",active)
 
-array = [randint(0,10) for x in range(1000000)]  # create array
+array = [randint(0,upper) for x in range(L)]  # create array
+base = array.sort()
+
 msg = to_string(array)
+
 sorted = False
 i = 0
 x = 0
+ready = 0
 while not sorted:
-    
+    #print("Attempt #",x)
     conn = conexiones[i][0] # connection
     address = conexiones[i][1]
     print("Address ",address)
@@ -77,18 +79,29 @@ while not sorted:
 
     v2 =conn.send(bytes(msg,'UTF-8')) # send array
     print("SENT ARRAY. Size:",v2)
-    ready = conn.recv(1).decode() # get if array was sorted
-    print("READY IS ",ready, "size ",len(ready))
+
+    #ready = conn.recv(1).decode() # get if array was sorted
+    #print("READY IS ",ready, "size ",len(ready))
+
     data = conn.recv(4096000000) # receive array from client
     array = data.decode()
-    
-    array = to_array(array)
-    print("LEN ",len(array))
+    print("converted array")
 
+    array = to_array(array)
+    print(array)
+    print("length: ",len(array))
+    A = len(array)==L
+    B = is_sorted(array)
+    print("IS L? ",A)
+    print("sorted?",B)
+    if A and B:
+        print("conditions met")
+        ready = 1
+
+    
     if int(ready) == 1:
         sorted = True
         print("it was sorted")
-        print("Array printed")
         break
     else:
         print("not sorted")

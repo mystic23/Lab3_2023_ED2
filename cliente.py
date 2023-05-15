@@ -1,29 +1,11 @@
 import socket, threading
-from sorting_algorithms import mergeSort,OrderVec
+from sorting_algorithms import mergeSort,OrderVec,quicksort
 
-def bubbleSort(array, stop_event):
-    n = len(array)
-
-    for i in range(n):
-        # Last i elements are already sorted
-        for j in range(n - i - 1):
-            # Traverse the array from 0 to n-i-1
-            # Swap if the element found is greater than the next element
-            if array[j] > array[j + 1]:
-                array[j], array[j + 1] = array[j + 1], array[j]
-
-            # Check if the thread should stop
-            if stop_event.is_set():
-                return
-    return 1
 
 def my_function(stop_event,op):
     # Your function code goes here
     # Call the bubble sort algorithm
-    if op==0:
-        print("bubble")
-        bubbleSort(array, stop_event)
-    elif op==1:
+    if op==1:
         print("merge")
         mergeSort(array,stop_event)
     elif op==2:
@@ -31,6 +13,7 @@ def my_function(stop_event,op):
         sol = OrderVec(array,stop_event)
     elif op == 3:
         print("quickM")
+        quicksort(array,0,len(array)-1,stop_event)
     # Print the sorted array
 
 def timeout_handler():
@@ -68,9 +51,12 @@ while True:
 
     in_data =  client.recv(4096000000) # receive 
     check = in_data.decode() 
-    #print(check)
+    if len(check)==0:
+        break
+    else:
+        print("array received")
     array= to_array(check) # into arrayz
-    print("LEN ",len(array))
+    print("Length: ",len(array))
     stop_event = threading.Event()
 
     # Create a thread and start it
@@ -92,12 +78,10 @@ while True:
         timeout_handler()
             
                 
-    if finished == 0:
-        print("did not finish")
-    else:
-        print("FINISHED",finished)
-    v0 = client.send(bytes(str(finished),"UTF-8"))
-    print("SENT IF FINISHED. Size: ",v0)
+    print("finished is ",finished)
+
+    #v0 = client.send(bytes(str(finished),"UTF-8"))
+    #print("SENT IF FINISHED. Size: ",v0)
 
     out_data = to_string(array)
 
