@@ -14,15 +14,18 @@ def to_string(arr):
 def to_array(string):
     res = []
     for x in string.split(","):
-        if len(x)>0:
+        if len(x)>0: # add non-empty values
             res.append(int(x))
     return res 
 
 def is_sorted(arr):
+    # all returns True if all elements are smaller than the next
+    # one in the array
     return all(arr[i] <= arr[i+1] for i in range(len(arr)-1))
 
-LOCALHOST = "127.0.0.1"
-PORT = 8080
+LOCALHOST = '10.20.30.159'
+  # Replace with IP address 
+PORT = 65432  # replace with 65432 or other available port
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 # socketoptions
@@ -33,19 +36,20 @@ print("Waiting for client request..")
 
 active = 0
 conexiones = []
-"""
+
 print("Elija un metodo: (1) Mergesort (2) Heapsort (3) Quicksort")
 op = int(input())
 print("Elija numero mas grande")
 upper = int(input())
 print("Elija tiempo limite")
 time_limit = float(input())
-"""
+print("Elija longitud de arreglo")
+L = int(input())
 
-op = 2
-upper = 1000
-time_limit = 1
-L = 100000
+""" op = 3
+upper = 100
+time_limit = 0.5
+L = 100000 """
 # metodo y limite de tiempo
 
 while active!=2: # wait until 2 conections

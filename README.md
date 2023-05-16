@@ -1,8 +1,10 @@
 # Lab3_2023_ED2
 
+## Sobre el código
+Se realizaron pruebas exitosas con los 3 métodos en 3 computadoras hasta una longitud de arreglo de 100k.
+Están adjuntas en el word.
 
 ### DIAGRAMA UML
-PUML
 @startuml
 class OrderVec{
 +values

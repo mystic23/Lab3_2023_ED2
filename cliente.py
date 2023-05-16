@@ -1,7 +1,6 @@
 import socket, threading
 from sorting_algorithms import mergeSort,OrderVec,quicksort
 
-
 def my_function(stop_event,op):
     # Your function code goes here
     # Call the bubble sort algorithm
@@ -32,8 +31,8 @@ def to_array(string):
 
 finished = 1 # assume it successfully sorted
 
-SERVER = "127.0.0.1" #local
-PORT = 8080
+SERVER = "127.0.0.1" #replace with IP of server
+PORT = 8080 # replace iwth 65432 or available port
 # AF INET IS IPv4 SOCK STREAM IS TCP
 times = 0
 
