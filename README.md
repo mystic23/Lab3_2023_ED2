@@ -10,12 +10,20 @@ Se realizaron pruebas exitosas con los 3 métodos en 3 computadoras hasta una lo
 Están adjuntas en el word.
 
 ### DIAGRAMA UML
+![](lab1.png)
+
 @startuml
+
 class OrderVec{
+
 +values
+
 +heap_sort()
+
 +heapify()
+
 }
+
 
 @enduml
 
