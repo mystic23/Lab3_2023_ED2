@@ -4,7 +4,7 @@ Integrantes del equipo 📚 :
 - David Hernandez
 - María Solá
 - Jesus Zuluaga
--
+
 ## Sobre el código
 Se realizaron pruebas exitosas con los 3 métodos en 3 computadoras hasta una longitud de arreglo de 100k.
 Están adjuntas en el word.
